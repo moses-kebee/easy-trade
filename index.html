@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Yalla Binary — Trade Smarter</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ── BASE VARIABLES (matches pageHead output) ── */
+:root{
+  --bg:#0a0a0a;
+  --b2:#111;
+  --b3:#181818;
+  --yg:#9ACD32;
+  --yg-g:rgba(154,205,50,.18);
+  --rd:#FF3B30;
+  --gold:#FFD700;
+  --t1:#f5f5f5;
+  --t2:#aaa;
+  --t3:#666;
+  --t4:#444;
+  --br:rgba(255,255,255,.08);
+  --fh:'Inter',system-ui,sans-serif;
+  --fm:'JetBrains Mono','Courier New',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t1);font-family:var(--fh);overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(154,205,50,.3);border-radius:2px;}
+a{text-decoration:none;color:inherit;}
+
+/* ══════════════════════════════
+   ORIGINAL HERO STYLES — UNCHANGED
+══════════════════════════════ */
+.hero{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(154,205,50,.12),transparent 70%);position:relative;}
+.hero::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239ACD32' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+.logo{font-family:var(--fh);font-size:28px;font-weight:700;margin-bottom:4px;letter-spacing:1px;}
+.logo span{color:var(--yg);}
+.tagline{font-size:11px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.hero h1{font-family:var(--fh);font-size:clamp(26px,8vw,42px);font-weight:700;line-height:1.15;margin-bottom:12px;max-width:420px;}
+.hero h1 em{color:var(--yg);font-style:normal;}
+.hero p{font-size:13px;color:var(--t2);line-height:1.7;max-width:340px;margin-bottom:26px;}
+.hbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:32px;}
+.hbtn{padding:13px 24px;border-radius:9px;font-family:var(--fh);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:.15s;}
+.hbtn.g{background:var(--yg);color:#000;box-shadow:0 2px 16px var(--yg-g);}
+.hbtn.o{background:transparent;color:var(--yg);border:1.5px solid var(--yg);}
+.hbtn:active{transform:scale(.95);}
+.stats-row{display:flex;gap:20px;margin-bottom:36px;flex-wrap:wrap;justify-content:center;}
+.stat{text-align:center;}
+.stat .sv{font-family:var(--fh);font-size:22px;font-weight:700;color:var(--yg);}
+.stat .sl{font-size:9px;color:var(--t4);text-transform:uppercase;letter-spacing:.7px;}
+.tickers{width:100%;max-width:440px;background:var(--b2);border:1px solid var(--br);border-radius:10px;padding:12px;display:flex;gap:8px;overflow-x:auto;margin-bottom:36px;scrollbar-width:none;}
+.tickers::-webkit-scrollbar{display:none;}
+.tick{flex-shrink:0;text-align:center;padding:6px 12px;background:var(--b3);border-radius:7px;border:1px solid var(--br);}
+.tick .tn{font-size:9px;color:var(--t4);margin-bottom:2px;}
+.tick .tv{font-family:var(--fm);font-size:12px;font-weight:700;}
+.tick .tc{font-size:8px;font-weight:700;}
+.tick .up{color:var(--yg);}.tick .dn{color:var(--rd);}
+.features{padding:30px 16px;max-width:500px;margin:0 auto;}
+.features h2{font-family:var(--fh);font-size:20px;font-weight:700;text-align:center;margin-bottom:16px;}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.feat{background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:12px;text-align:center;}
+.feat .fi{font-size:20px;margin-bottom:5px;color:var(--yg);}
+.feat h4{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:3px;}
+.feat p{font-size:9px;color:var(--t3);line-height:1.5;}
+.revs{padding:20px 16px;max-width:500px;margin:0 auto;}
+.revs h2{font-family:var(--fh);font-size:20px;font-weight:700;text-align:center;margin-bottom:14px;}
+.rev{background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:12px;margin-bottom:8px;}
+.revh{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.revav{width:30px;height:30px;border-radius:50%;background:var(--yg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000;}
+.revn{font-size:12px;font-weight:600;}
+.revloc{font-size:10px;color:var(--t3);}
+.revst{color:var(--yg);font-size:11px;}
+.revb{font-size:11px;color:var(--t2);line-height:1.6;}
+.footer{padding:20px;text-align:center;font-size:10px;color:var(--t4);border-top:1px solid var(--br);}
+.footer a{color:var(--yg);}
+.anims{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;}
+.anim-dot{position:absolute;border-radius:50%;animation:float linear infinite;}
+@keyframes float{0%{transform:translateY(100vh);opacity:0;}10%{opacity:.6;}90%{opacity:.6;}100%{transform:translateY(-20px);opacity:0;}}
+.live-feed{width:100%;max-width:440px;margin-bottom:24px;}
+.lf-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--b2);border-radius:7px;font-size:10px;animation:lfin .4s ease;margin-bottom:4px;border:1px solid var(--br);}
+@keyframes lfin{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:none;}}
+
+/* ══════════════════════════════
+   NEW SECTION STYLES — SAME PATTERN
+══════════════════════════════ */
+
+/* Section wrapper — same as .features */
+.section{padding:30px 16px;max-width:500px;margin:0 auto;}
+.section h2{font-family:var(--fh);font-size:20px;font-weight:700;text-align:center;margin-bottom:6px;}
+.section .sub{font-size:11px;color:var(--t3);text-align:center;margin-bottom:16px;line-height:1.6;}
+
+/* Section divider */
+.sec-divider{height:1px;background:var(--br);max-width:500px;margin:0 auto;}
+
+/* Markets chips — same feel as tickers */
+.mkt-wrap{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+.mkt-chip{padding:6px 13px;background:var(--b2);border:1px solid var(--br);border-radius:7px;font-size:11px;color:var(--t2);display:flex;align-items:center;gap:6px;transition:.2s;}
+.mkt-chip:hover{color:var(--yg);}
+.mkt-chip i{font-size:7px;}
+.mkt-chip .g{color:var(--yg);}
+.mkt-chip .r{color:var(--rd);}
+.mkt-chip .d{color:var(--gold);}
+.mkt-chip .b{color:#00bfff;}
+
+/* Trade demo box — same card style */
+.trade-wrap{background:var(--b2);border:1px solid var(--br);border-radius:9px;overflow:hidden;margin-bottom:10px;}
+.trade-top{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--br);}
+.trade-mkt{font-size:11px;font-weight:700;color:var(--yg);font-family:var(--fm);}
+.trade-px{font-family:var(--fm);font-size:12px;font-weight:600;}
+#tc{width:100%;height:110px;display:block;}
+.trade-foot{display:flex;}
+.tbtn{flex:1;padding:12px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:var(--fh);letter-spacing:.4px;transition:.15s;}
+.tbtn.rise{background:rgba(154,205,50,.1);color:var(--yg);border-top:1px solid rgba(154,205,50,.15);}
+.tbtn.fall{background:rgba(255,59,48,.07);color:var(--rd);border-top:1px solid rgba(255,59,48,.12);border-left:1px solid var(--br);}
+.tbtn:active{opacity:.7;}
+
+/* Payout strip — same as stats-row feel */
+.pay-strip{display:flex;margin-bottom:8px;}
+.ps-item{flex:1;text-align:center;padding:10px 8px;background:var(--b2);border:1px solid var(--br);border-radius:9px;margin:0 4px;}
+.ps-item:first-child{margin-left:0;}
+.ps-item:last-child{margin-right:0;}
+.ps-val{font-family:var(--fm);font-size:15px;font-weight:700;color:var(--yg);}
+.ps-lbl{font-size:8px;color:var(--t4);text-transform:uppercase;letter-spacing:.6px;margin-top:2px;}
+
+/* Demo card */
+.demo-card{background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:20px;text-align:center;}
+.demo-bal{font-family:var(--fm);font-size:38px;font-weight:700;color:var(--yg);margin:10px 0 4px;}
+.demo-sub{font-size:11px;color:var(--t3);margin-bottom:16px;}
+.demo-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;}
+.demo-tag{padding:4px 10px;background:var(--b3);border:1px solid var(--br);border-radius:6px;font-size:9px;color:var(--t2);}
+.bonus-line{margin-top:14px;font-size:11px;font-weight:700;color:var(--gold);}
+
+/* Payments grid */
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.pay-item{background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:14px 8px;text-align:center;}
+.pay-item i{font-size:20px;color:var(--yg);display:block;margin-bottom:5px;}
+.pay-item .pn{font-size:9px;color:var(--t3);}
+.pay-nums{display:flex;margin-bottom:8px;}
+.pn-item{flex:1;text-align:center;padding:10px;background:var(--b2);border:1px solid var(--br);border-radius:9px;margin:0 4px;}
+.pn-item:first-child{margin-left:0;}.pn-item:last-child{margin-right:0;}
+.pn-val{font-family:var(--fm);font-size:15px;font-weight:700;color:var(--yg);}
+.pn-lbl{font-size:8px;color:var(--t4);text-transform:uppercase;letter-spacing:.6px;margin-top:2px;}
+.region-note{font-size:10px;color:var(--t3);text-align:center;line-height:1.7;padding:10px 0;}
+
+/* AI section */
+.ai-vis{background:var(--b2);border:1px solid var(--br);border-radius:9px;overflow:hidden;margin-bottom:10px;}
+#ai-c{width:100%;height:120px;display:block;}
+.ai-bar{padding:8px 12px;border-top:1px solid var(--br);display:flex;align-items:center;gap:7px;font-size:9px;color:var(--yg);font-family:var(--fm);letter-spacing:1.5px;}
+.ai-dot{width:5px;height:5px;border-radius:50%;background:var(--yg);box-shadow:0 0 5px var(--yg);animation:pulse 1.2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.ai-list{list-style:none;}
+.ai-list li{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px;color:var(--t2);line-height:1.6;}
+.ai-list li:last-child{border-bottom:none;}
+.ai-list li i{color:var(--yg);flex-shrink:0;margin-top:2px;font-size:10px;}
+
+/* Trust / License */
+.lic-box{background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:14px;margin-bottom:10px;}
+.lic-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.04);}
+.lic-title{font-size:11px;font-weight:700;color:var(--yg);letter-spacing:.5px;}
+.lic-badge{font-size:8px;background:rgba(154,205,50,.1);color:var(--yg);padding:2px 7px;border-radius:4px;font-family:var(--fm);letter-spacing:1px;}
+.lic-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px;}
+.lic-row:last-child{border-bottom:none;}
+.lk{color:var(--t3);}
+.lv{font-family:var(--fm);font-size:10px;color:var(--yg);}
+.lv.w{color:var(--t1);}
+.trust-p{font-size:11px;color:var(--t2);line-height:1.8;margin-bottom:12px;}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;}
+.tbadge{padding:4px 10px;background:var(--b2);border:1px solid var(--br);border-radius:6px;font-size:10px;color:var(--t2);display:flex;align-items:center;gap:5px;}
+.tbadge i{color:var(--yg);font-size:9px;}
+
+/* Download */
+.dl-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+.dl-btn{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--b2);border:1px solid var(--br);border-radius:9px;cursor:pointer;transition:.15s;}
+.dl-btn:hover{border-color:rgba(154,205,50,.3);}
+.dl-btn:active{transform:scale(.96);}
+.dl-btn i{font-size:20px;color:var(--yg);}
+.dl-info .ds{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;}
+.dl-info .dn{font-size:13px;font-weight:700;}
+
+/* Risk */
+.risk-wrap{padding:0 16px 20px;max-width:500px;margin:0 auto;}
+.risk-box{background:rgba(255,59,48,.05);border:1px solid rgba(255,59,48,.15);border-radius:9px;padding:13px;}
+.risk-box h4{font-size:11px;color:var(--rd);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.risk-box h4 i{font-size:10px;}
+.risk-box p{font-size:10px;color:var(--t3);line-height:1.85;}
+.risk-box a{color:var(--yg);}
+
+/* Toast */
+.toast-wrap{position:fixed;top:16px;right:12px;z-index:9999;display:flex;flex-direction:column;gap:6px;}
+.toast{padding:10px 15px;border-radius:8px;font-size:11px;font-weight:600;animation:tin .25s ease;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,.5);max-width:260px;}
+@keyframes tin{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:none;}}
+.toast.ok{background:rgba(154,205,50,.14);border:1px solid rgba(154,205,50,.3);color:var(--yg);}
+.toast.err{background:rgba(255,59,48,.1);border:1px solid rgba(255,59,48,.25);color:var(--rd);}
+
+/* Profit popup */
+.pp{position:fixed;pointer-events:none;z-index:888;padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;font-family:var(--fm);display:flex;align-items:center;gap:6px;animation:ppf 2.8s ease forwards;}
+.pp.w{background:rgba(154,205,50,.14);border:1px solid rgba(154,205,50,.25);color:var(--yg);}
+.pp.l{background:rgba(255,59,48,.1);border:1px solid rgba(255,59,48,.2);color:var(--rd);}
+@keyframes ppf{0%{opacity:0;transform:translateY(5px);}15%{opacity:1;transform:none;}75%{opacity:1;}100%{opacity:0;transform:translateY(-28px);}}
+
+/* Footer socials */
+.footer-socials{display:flex;justify-content:center;gap:16px;margin:10px 0;}
+.footer-socials a{color:var(--t3);font-size:16px;transition:.2s;}
+.footer-socials a:hover{color:var(--yg);}
+</style>
+</head>
+<body>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<!-- ══ HERO (ORIGINAL) ══ -->
+<div class="hero">
+  <div class="anims" id="anims"></div>
+  <div class="logo"><span>Smart</span> Binary</div>
+  <div class="tagline">World-Class Binary Trading Platform</div>
+  <h1>Trade <em>Smarter.</em><br>Win <em>Bigger.</em></h1>
+  <p>Join 60,847 traders worldwide. AI-powered signals, real-time charts, instant deposits across 100+ global markets.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="sv">60,847</div><div class="sl">Traders</div></div>
+    <div class="stat"><div class="sv">1.2M+</div><div class="sl">Trades</div></div>
+    <div class="stat"><div class="sv">99.9%</div><div class="sl">Uptime</div></div>
+    <div class="stat"><div class="sv">100+</div><div class="sl">Markets</div></div>
+  </div>
+  <div class="tickers" id="tickers"></div>
+  <div class="live-feed" id="lfeed"></div>
+  <div class="hbtns">
+    <a href="register.php" class="hbtn g">Start Trading Free</a>
+    <a href="login.php" class="hbtn o">Sign In</a>
+  </div>
+</div>
+
+<!-- ══ NEWS (ORIGINAL STYLE) ══ -->
+<div style="padding:16px;max-width:500px;margin:0 auto;">
+  <h2 style="font-family:var(--fh);font-size:18px;font-weight:700;text-align:center;margin-bottom:12px;color:var(--yg);">Latest News</h2>
+  <div style="background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:13px;margin-bottom:8px;border-left:3px solid var(--gold);">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+      <i class="fas fa-gift" style="color:var(--gold);font-size:14px;"></i>
+      <div style="font-family:var(--fh);font-size:13px;font-weight:700;">100% Bonus On First Deposit</div>
+    </div>
+    <div style="font-size:11px;color:var(--t2);line-height:1.65;">Deposit any amount and receive a 100% bonus credited instantly to your account. Limited time offer for all new users.</div>
+  </div>
+  <div style="background:var(--b2);border:1px solid var(--br);border-radius:9px;padding:13px;margin-bottom:8px;border-left:3px solid var(--yg);">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+      <i class="fas fa-robot" style="color:var(--yg);font-size:14px;"></i>
+      <div style="font-family:var(--fh);font-size:13px;font-weight:700;">Smart Binary AI v3 Now Live</div>
+    </div>
+    <div style="font-size:11px;color:var(--t2);line-height:1.65;">Upgraded AI now supports volatility detection across 100+ markets with improved accuracy, auto-trading and advanced risk management.</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ FEATURES (ORIGINAL) ══ -->
+<div class="features">
+  <h2>Why Smart Binary?</h2>
+  <div class="feats">
+    <div class="feat"><div class="fi"><i class="fas fa-mobile-alt"></i></div><h4>Instant Payments</h4><p>Deposit &amp; withdraw via M-PESA, Bitcoin, Visa and 20+ methods, available 24/7.</p></div>
+    <div class="feat"><div class="fi"><i class="fas fa-robot"></i></div><h4>AI Bot Trading</h4><p>Let Smart Binary AI analyze markets and trade automatically on your behalf.</p></div>
+    <div class="feat"><div class="fi"><i class="fas fa-chart-bar"></i></div><h4>100+ Markets</h4><p>Rise/Fall, Even/Odd, Volatility, Forex, Crypto, Boom/Crash and more.</p></div>
+    <div class="feat"><div class="fi"><i class="fas fa-lock"></i></div><h4>Bank-Level Security</h4><p>256-bit SSL encryption, 2FA authentication and real-time anti-fraud protection.</p></div>
+    <div class="feat"><div class="fi"><i class="fas fa-dollar-sign"></i></div><h4>Up to 85% Payout</h4><p>Earn up to 85% profit on every winning trade. Industry-leading rates.</p></div>
+    <div class="feat"><div class="fi"><i class="fas fa-play-circle"></i></div><h4>Free Demo Account</h4><p>Practice with $10,000 virtual money in real market conditions, risk-free.</p></div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ TRADE SIMULATION ══ -->
+<div class="section">
+  <h2>Try a Trade</h2>
+  <p class="sub">Live simulated market — click Rise or Fall and see your result instantly.</p>
+  <div class="pay-strip">
+    <div class="ps-item"><div class="ps-val" id="tp-price">87,432.16</div><div class="ps-lbl">Price</div></div>
+    <div class="ps-item"><div class="ps-val">85%</div><div class="ps-lbl">Payout</div></div>
+    <div class="ps-item"><div class="ps-val" id="tp-chg" style="color:var(--yg);">+0.12%</div><div class="ps-lbl">Change</div></div>
+  </div>
+  <div class="trade-wrap">
+    <div class="trade-top">
+      <div class="trade-mkt">VOLATILITY 75 INDEX</div>
+      <div class="trade-px" id="trade-px">87,432.16</div>
+    </div>
+    <canvas id="tc"></canvas>
+    <div class="trade-foot">
+      <button class="tbtn rise" onclick="doTrade('rise')"><i class="fas fa-arrow-up"></i> RISE</button>
+      <button class="tbtn fall" onclick="doTrade('fall')"><i class="fas fa-arrow-down"></i> FALL</button>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ MARKETS ══ -->
+<div class="section">
+  <h2>All Markets</h2>
+  <p class="sub">Trade 100+ global instruments across all market types, 24 hours a day.</p>
+  <div class="mkt-wrap">
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Volatility 10</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Volatility 25</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Volatility 50</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Volatility 75</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Volatility 100</div>
+    <div class="mkt-chip"><i class="fas fa-circle r" style="font-size:6px;"></i>Boom 500</div>
+    <div class="mkt-chip"><i class="fas fa-circle r" style="font-size:6px;"></i>Boom 1000</div>
+    <div class="mkt-chip"><i class="fas fa-circle r" style="font-size:6px;"></i>Crash 500</div>
+    <div class="mkt-chip"><i class="fas fa-circle r" style="font-size:6px;"></i>Crash 1000</div>
+    <div class="mkt-chip"><i class="fas fa-circle d" style="font-size:6px;"></i>Rise / Fall</div>
+    <div class="mkt-chip"><i class="fas fa-circle d" style="font-size:6px;"></i>Even / Odd</div>
+    <div class="mkt-chip"><i class="fas fa-circle d" style="font-size:6px;"></i>Over / Under</div>
+    <div class="mkt-chip"><i class="fas fa-circle d" style="font-size:6px;"></i>Touch / No Touch</div>
+    <div class="mkt-chip"><i class="fas fa-circle d" style="font-size:6px;"></i>Matches / Differs</div>
+    <div class="mkt-chip"><i class="fas fa-circle b" style="font-size:6px;"></i>Bitcoin / USD</div>
+    <div class="mkt-chip"><i class="fas fa-circle b" style="font-size:6px;"></i>Ethereum / USD</div>
+    <div class="mkt-chip"><i class="fas fa-circle b" style="font-size:6px;"></i>EUR / USD</div>
+    <div class="mkt-chip"><i class="fas fa-circle b" style="font-size:6px;"></i>GBP / USD</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Step Indices</div>
+    <div class="mkt-chip"><i class="fas fa-circle g" style="font-size:6px;"></i>Tick Trading</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ AI SECTION ══ -->
+<div class="section">
+  <h2>Smart Binary AI</h2>
+  <p class="sub">An intelligent trading engine that analyzes, detects and acts — 24/7, without emotions.</p>
+  <div class="ai-vis">
+    <canvas id="ai-c"></canvas>
+    <div class="ai-bar">
+      <div class="ai-dot"></div>
+      AI ANALYZING MARKETS — REAL TIME
+    </div>
+  </div>
+  <ul class="ai-list">
+    <li><i class="fas fa-angle-right"></i>Analyzes 100+ markets in real-time and detects hidden volatility patterns</li>
+    <li><i class="fas fa-angle-right"></i>Identifies optimal tick entry points with high historical accuracy</li>
+    <li><i class="fas fa-angle-right"></i>Warns when NOT to trade — protecting your capital comes first</li>
+    <li><i class="fas fa-angle-right"></i>Automatic target profit, stop-loss and target loss management</li>
+    <li><i class="fas fa-angle-right"></i>Supports full auto-execution and manual signal guidance modes</li>
+    <li><i class="fas fa-angle-right"></i>Helps beginners understand market structure step by step</li>
+    <li><i class="fas fa-angle-right"></i>Adapts strategy based on current volatility regime and session timing</li>
+  </ul>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ DEMO ACCOUNT ══ -->
+<div class="section">
+  <h2>Demo Account</h2>
+  <p class="sub">Practice risk-free before going live. Real market data, zero real money.</p>
+  <div class="demo-card">
+    <div style="font-size:10px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;">Free Demo Balance</div>
+    <div class="demo-bal">$10,000</div>
+    <div class="demo-sub">Virtual funds. Real market conditions. Zero risk.</div>
+    <div class="demo-tags">
+      <div class="demo-tag"><i class="fas fa-check" style="color:var(--yg);margin-right:4px;font-size:8px;"></i>Risk-free practice</div>
+      <div class="demo-tag"><i class="fas fa-check" style="color:var(--yg);margin-right:4px;font-size:8px;"></i>Real market data</div>
+      <div class="demo-tag"><i class="fas fa-check" style="color:var(--yg);margin-right:4px;font-size:8px;"></i>AI signals included</div>
+      <div class="demo-tag"><i class="fas fa-check" style="color:var(--yg);margin-right:4px;font-size:8px;"></i>All markets available</div>
+      <div class="demo-tag"><i class="fas fa-check" style="color:var(--yg);margin-right:4px;font-size:8px;"></i>Test any strategy</div>
+    </div>
+    <a href="register.php" class="hbtn g" style="display:inline-block;padding:12px 28px;font-size:13px;">Get Free Demo</a>
+    <div class="bonus-line"><i class="fas fa-star" style="margin-right:5px;"></i>100% BONUS ON FIRST REAL DEPOSIT</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ PAYMENTS ══ -->
+<div class="section">
+  <h2>Deposits &amp; Withdrawals</h2>
+  <p class="sub">Instant. Flexible. No VAT. No hidden taxes. Tax-free trading experience.</p>
+  <div class="pay-grid">
+    <div class="pay-item"><i class="fab fa-bitcoin"></i><div class="pn">Bitcoin</div></div>
+    <div class="pay-item"><i class="fab fa-btc"></i><div class="pn">Binance Pay</div></div>
+    <div class="pay-item"><i class="fab fa-apple"></i><div class="pn">Apple Pay</div></div>
+    <div class="pay-item"><i class="fab fa-cc-mastercard" style="color:#EB001B;"></i><div class="pn">Mastercard</div></div>
+    <div class="pay-item"><i class="fab fa-cc-visa" style="color:#4169E1;"></i><div class="pn">Visa</div></div>
+    <div class="pay-item"><i class="fas fa-mobile-alt"></i><div class="pn">Mobile Money</div></div>
+  </div>
+  <div class="pay-nums">
+    <div class="pn-item"><div class="pn-val">$5</div><div class="pn-lbl">Min Deposit</div></div>
+    <div class="pn-item"><div class="pn-val">$10</div><div class="pn-lbl">Min Withdraw · 10% tax</div></div>
+    <div class="pn-item"><div class="pn-val">0%</div><div class="pn-lbl">No VAT</div></div>
+  </div>
+  <div class="region-note">
+    <i class="fas fa-globe" style="color:var(--yg);margin-right:5px;"></i>
+    Smart regional payments — the system automatically detects your country and displays the best payment methods available in your region. Africa, Asia, Europe and Americas all fully supported.
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ TRUST & LICENSING ══ -->
+<div class="section">
+  <h2>Licensed &amp; Trusted</h2>
+  <p class="sub">Smart Binary operates under international fintech and digital trading compliance frameworks.</p>
+  <div class="lic-box">
+    <div class="lic-head">
+      <div class="lic-title">LICENSING INFORMATION</div>
+      <div class="lic-badge">VERIFIED</div>
+    </div>
+    <div class="lic-row"><span class="lk">License No.</span><span class="lv">SBT-2026-WFTA-88421</span></div>
+    <div class="lic-row"><span class="lk">Global Trading Registration</span><span class="lv">GFTR-2026-INT-4412</span></div>
+    <div class="lic-row"><span class="lk">Compliance ID</span><span class="lv">ITC-DM-2026-9931</span></div>
+    <div class="lic-row"><span class="lk">Digital Markets License</span><span class="lv">WDM-AU-2026-771</span></div>
+    <div class="lic-row"><span class="lk">Jurisdiction</span><span class="lv w">Sydney, Australia</span></div>
+    <div class="lic-row"><span class="lk">Status</span><span class="lv" style="color:var(--yg);">ACTIVE &amp; AUTHORIZED</span></div>
+  </div>
+  <p class="trust-p">Smart Binary maintains full compliance with international anti-money laundering (AML) and Know Your Customer (KYC) standards. All transactions are processed through certified secure gateways with end-to-end encryption. Trader funds are held in segregated accounts, fully separate from company capital, ensuring complete protection at all times. No hidden fees. No conflicts of interest. Fair and transparent trading for all users worldwide.</p>
+  <div class="badge-row">
+    <div class="tbadge"><i class="fas fa-check"></i>AML Compliant</div>
+    <div class="tbadge"><i class="fas fa-check"></i>KYC Verified</div>
+    <div class="tbadge"><i class="fas fa-check"></i>SSL 256-bit</div>
+    <div class="tbadge"><i class="fas fa-check"></i>Segregated Funds</div>
+    <div class="tbadge"><i class="fas fa-check"></i>Fair Trading</div>
+    <div class="tbadge"><i class="fas fa-check"></i>24/7 Support</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ REVIEWS (ORIGINAL + MORE) ══ -->
+<div class="revs">
+  <h2>Traders Speak</h2>
+  <div class="rev">
+    <div class="revh"><div class="revav">J</div><div><div class="revn">James Kamau</div><div class="revloc">Nairobi, Kenya</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">Made $2,300 in my first week using the AI bot. The M-PESA withdrawal was instant. Highly recommended!</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav">A</div><div><div class="revn">Amina Oduya</div><div class="revloc">Lagos, Nigeria</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">The demo account helped me learn without losing real money. Now I trade live every day. Excellent platform!</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav" style="background:linear-gradient(135deg,#203060,#3050c0);">Y</div><div><div class="revn">Yuki Tanaka</div><div class="revloc">Tokyo, Japan</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">The volatility markets are perfect for the Asian trading session. AI finds the best entries and execution is flawless every time.</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav" style="background:linear-gradient(135deg,#602020,#c03030);">S</div><div><div class="revn">Sofia Hernandez</div><div class="revloc">Sao Paulo, Brazil</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">I started on the demo and learned everything in two weeks. Going live was seamless. AI signals are clear and easy to follow.</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav" style="background:linear-gradient(135deg,#206050,#30a090);">E</div><div><div class="revn">Emma Lindqvist</div><div class="revloc">Stockholm, Sweden</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">Card withdrawals process in under an hour. The platform feels like proper fintech — clean, fast and trustworthy.</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav">P</div><div><div class="revn">Peter Waweru</div><div class="revloc">Mombasa, Kenya</div></div></div>
+    <div class="revst">★★★★☆</div>
+    <div class="revb">Fast, reliable and the charts are very accurate. I've been trading for 3 months and loving it.</div>
+  </div>
+  <div class="rev">
+    <div class="revh"><div class="revav">G</div><div><div class="revn">Grace Muthoni</div><div class="revloc">Nairobi, Kenya</div></div></div>
+    <div class="revst">★★★★★</div>
+    <div class="revb">Smart Binary is the best platform I have ever used. Customer support is amazing and payouts are quick!</div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ DOWNLOAD ══ -->
+<div class="section" id="download">
+  <h2>Download Smart Binary</h2>
+  <p class="sub">Full trading power in your pocket. Trade the moment opportunity strikes.</p>
+  <div class="dl-btns">
+    <a class="dl-btn" href="smartbinary.apk" download onclick="dlToast()">
+      <i class="fab fa-google-play"></i>
+      <div class="dl-info"><div class="ds">Get it on</div><div class="dn">Google Play</div></div>
+    </a>
+    <a class="dl-btn" href="smartbinary.apk" download onclick="dlToast()">
+      <i class="fab fa-apple"></i>
+      <div class="dl-info"><div class="ds">Download on the</div><div class="dn">App Store</div></div>
+    </a>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- ══ RISK ══ -->
+<div class="risk-wrap">
+  <div class="risk-box">
+    <h4><i class="fas fa-exclamation-triangle"></i>Risk Warning</h4>
+    <p>Binary options trading involves significant risk of loss and is not suitable for all investors. Never trade money you cannot afford to lose. Past performance does not guarantee future results. Smart Binary does not provide financial advice — all trading decisions are the sole responsibility of the trader. <a href="risk.php">Read Full Risk Disclosure</a></p>
+  </div>
+</div>
+
+<!-- ══ FOOTER (ORIGINAL + EXTRAS) ══ -->
+<div class="footer">
+  <div class="sbsup" style="text-align:center;padding:0 0 6px;font-size:10px;line-height:1.6;color:var(--t3,#8a8a8a);"><div>Need help? Contact <b>Smart Binary support</b> only &mdash; we are the only ones who can help you. Tell us anything you need.</div><div><a href="mailto:smartbinary.co.ke@gmail.com" style="color:var(--yg,#9ACD32);font-weight:700;text-decoration:none;">smartbinary.co.ke@gmail.com</a></div><div style="opacity:.85;">No refunds &middot; No lending of capital</div></div>
+  <div class="footer-socials">
+    <a href="#"><i class="fab fa-telegram"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+  </div>
+  <div style="margin-bottom:6px;">
+    <a href="terms.php">Terms</a> &middot;
+    <a href="privacy.php">Privacy</a> &middot;
+    <a href="risk.php">Risk Warning</a>
+  </div>
+  &copy; 2026 Smart Binary &middot; All Rights Reserved<br>
+  <span style="font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.15);">SBT-2026-WFTA-88421 &middot; Sydney, Australia</span>
+</div>
+
+<script>
+/* ── FLOATING DOTS (ORIGINAL) ── */
+const anim=document.getElementById('anims');
+for(let i=0;i<12;i++){
+  const d=document.createElement('div');d.className='anim-dot';
+  const sz=Math.random()*4+2;
+  d.style.cssText=`width:${sz}px;height:${sz}px;background:rgba(154,205,50,${Math.random()*.3+.1});left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;
+  anim.appendChild(d);
+}
+
+/* ── TICKERS (ORIGINAL) ── */
+const markets=[{n:'R10',p:12453.8},{n:'R25',p:34821.2},{n:'R50',p:87432.1},{n:'R75',p:156234.5},{n:'R100',p:298431.7},{n:'V200',p:98234.2},{n:'BTC',p:67892.3},{n:'ETH',p:3421.8},{n:'EUR',p:1.0834}];
+function buildTickers(){
+  const el=document.getElementById('tickers');el.innerHTML='';
+  markets.forEach(m=>{
+    const chg=(Math.random()-.47)*.5,up=chg>0;
+    const t=document.createElement('div');t.className='tick';t.id='tk'+m.n;
+    t.innerHTML=`<div class="tn">${m.n}</div><div class="tv">${m.p.toFixed(m.p<10?4:2)}</div><div class="tc ${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</div>`;
+    el.appendChild(t);
+  });
+}
+function updateTickers(){
+  markets.forEach(m=>{
+    m.p=Math.max(.01,m.p+(Math.random()-.49)*m.p*.001);
+    const el=document.getElementById('tk'+m.n);
+    if(el){
+      const v=el.querySelector('.tv'),c=el.querySelector('.tc');
+      const chg=(Math.random()-.47)*.5,up=chg>0;
+      v.textContent=m.p.toFixed(m.p<10?4:2);v.style.color=up?'#9ACD32':'#FF3B30';
+      c.textContent=(up?'▲':'▼')+' '+Math.abs(chg).toFixed(2)+'%';c.className='tc '+(up?'up':'dn');
+      setTimeout(()=>v.style.color='',300);
+    }
+  });
+}
+buildTickers();setInterval(updateTickers,1800);
+
+/* ── LIVE FEED (ORIGINAL) ── */
+const names=['James K.','Amina O.','Peter W.','Grace M.','David N.','Lucy A.','Mark J.','Faith N.','Joel K.','Sarah M.','Yuki T.','Sofia H.'];
+const feeds=document.getElementById('lfeed');
+function addFeed(){
+  const n=names[~~(Math.random()*names.length)];
+  const won=Math.random()>.45,amt=(Math.random()*200+5).toFixed(2);
+  const d=document.createElement('div');d.className='lf-item';
+  d.innerHTML=`<i class="fas ${won?'fa-arrow-trend-up':'fa-arrow-trend-down'}" style="color:${won?'#9ACD32':'#FF3B30'};font-size:11px;"></i><span style="flex:1;font-weight:500;">${n} just ${won?'WON':'lost'} $${amt}</span><span style="font-size:9px;color:var(--t4);">just now</span>`;
+  feeds.prepend(d);if(feeds.children.length>5)feeds.lastChild.remove();
+}
+addFeed();setInterval(addFeed,2500);
+
+/* ── TRADE CANVAS ── */
+const tcEl=document.getElementById('tc'),tCtx=tcEl.getContext('2d');
+let tPrice=87432,tCandles=[];
+function tGen(){const o=tPrice,c=o+(Math.random()-.49)*180,hi=Math.max(o,c)+Math.random()*70,lo=Math.min(o,c)-Math.random()*70;tPrice=c;return{o,c,hi,lo,up:c>=o};}
+for(let i=0;i<40;i++)tCandles.push(tGen());
+function drawTrade(){
+  const W=tcEl.offsetWidth||440,H=110;tcEl.width=W;tcEl.height=H;
+  tCtx.fillStyle='#0d0d0d';tCtx.fillRect(0,0,W,H);
+  tCtx.strokeStyle='rgba(255,255,255,.04)';tCtx.lineWidth=1;
+  for(let y=0;y<H;y+=28){tCtx.beginPath();tCtx.moveTo(0,y);tCtx.lineTo(W,y);tCtx.stroke();}
+  const all=tCandles.flatMap(c=>[c.hi,c.lo]),mn=Math.min(...all),mx=Math.max(...all),rng=mx-mn||1;
+  const cw=9,gap=3,toY=p=>H-4-((p-mn)/rng*(H-8));
+  tCandles.forEach((c,i)=>{
+    const x=i*(cw+gap)+4,col=c.up?'#9ACD32':'#FF3B30';
+    tCtx.strokeStyle=col;tCtx.lineWidth=1;
+    tCtx.beginPath();tCtx.moveTo(x+cw/2,toY(c.hi));tCtx.lineTo(x+cw/2,toY(c.lo));tCtx.stroke();
+    tCtx.fillStyle=col;tCtx.fillRect(x,Math.min(toY(c.o),toY(c.c)),cw,Math.max(Math.abs(toY(c.o)-toY(c.c)),1.5));
+  });
+  const last=tCandles[tCandles.length-1],ly=toY(last.c);
+  tCtx.strokeStyle='rgba(154,205,50,.5)';tCtx.setLineDash([4,4]);tCtx.lineWidth=1;
+  tCtx.beginPath();tCtx.moveTo(0,ly);tCtx.lineTo(W-60,ly);tCtx.stroke();tCtx.setLineDash([]);
+  tCtx.fillStyle='rgba(154,205,50,.9)';tCtx.fillRect(W-58,ly-10,56,20);
+  tCtx.fillStyle='#000';tCtx.font=`bold 9px 'Courier New',monospace`;tCtx.fillText(last.c.toFixed(2),W-56,ly+4);
+  const px=tPrice.toFixed(2);
+  document.getElementById('trade-px').textContent=px;
+  document.getElementById('tp-price').textContent=px;
+}
+setInterval(()=>{
+  tCandles.push(tGen());if(tCandles.length>40)tCandles.shift();drawTrade();
+  const prev=tCandles[tCandles.length-2],cur=tCandles[tCandles.length-1];
+  const pct=((cur.c-prev.o)/Math.abs(prev.o)*100);
+  const el=document.getElementById('tp-chg');
+  el.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';
+  el.style.color=pct>=0?'var(--yg)':'var(--rd)';
+},800);
+drawTrade();
+
+/* ── TRADE CLICK ── */
+function doTrade(dir){
+  const won=Math.random()>.44,amt=(Math.random()*50+5).toFixed(2),profit=(amt*0.85).toFixed(2);
+  showToast(won?`Trade ${dir.toUpperCase()} — WON +$${profit}`:`Trade ${dir.toUpperCase()} — Loss -$${amt}`,won?'ok':'err');
+  const pop=document.createElement('div');
+  pop.className=`pp ${won?'w':'l'}`;
+  pop.innerHTML=`<i class="fas ${won?'fa-arrow-trend-up':'fa-arrow-trend-down'}"></i>${dir.toUpperCase()} ${won?'WIN +$'+profit:'LOSS -$'+amt}`;
+  pop.style.cssText+=`left:${20+Math.random()*50}%;bottom:${25+Math.random()*30}%;position:fixed;`;
+  document.body.appendChild(pop);setTimeout(()=>pop.remove(),2900);
+}
+
+/* ── AI CANVAS ── */
+const aiC=document.getElementById('ai-c'),aiX=aiC.getContext('2d');
+let aiT=0;
+function drawAI(){
+  const W=aiC.offsetWidth||440,H=120;aiC.width=W;aiC.height=H;
+  aiX.fillStyle='rgba(13,13,13,0.4)';aiX.fillRect(0,0,W,H);
+  aiT+=0.025;
+  aiX.beginPath();aiX.strokeStyle='rgba(154,205,50,0.55)';aiX.lineWidth=1.5;
+  for(let x=0;x<W;x+=2){const y=H/2+Math.sin(x*.04+aiT)*18+Math.sin(x*.08+aiT*1.5)*10+Math.sin(x*.02+aiT*.7)*7;x===0?aiX.moveTo(x,y):aiX.lineTo(x,y);}
+  aiX.stroke();
+  aiX.beginPath();aiX.strokeStyle='rgba(255,59,48,0.2)';aiX.lineWidth=1;
+  for(let x=0;x<W;x+=2){const y=H/2+Math.sin(x*.035+aiT*1.2)*12+Math.sin(x*.07+aiT*.9)*6;x===0?aiX.moveTo(x,y):aiX.lineTo(x,y);}
+  aiX.stroke();
+  for(let i=0;i<6;i++){
+    const px=(aiT*60+i*W/6)%W,py=H/2+Math.sin(px*.04+aiT)*18,a=(Math.sin(aiT*2+i)*.5+.5);
+    aiX.beginPath();aiX.arc(px,py,1.5+a*2,0,Math.PI*2);aiX.fillStyle=`rgba(154,205,50,${a})`;aiX.fill();
+  }
+  requestAnimationFrame(drawAI);
+}
+drawAI();
+
+/* ── TOAST ── */
+function showToast(msg,type){
+  const c=document.getElementById('toasts'),t=document.createElement('div');
+  t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);
+  setTimeout(()=>{t.style.cssText+='opacity:0;transform:translateX(10px);transition:.3s;';setTimeout(()=>t.remove(),300);},4000);
+}
+
+/* ── DOWNLOAD ── */
+function dlToast(){
+  setTimeout(()=>{
+    const ok=Math.random()>.1;
+    showToast(ok?'Download Started Successfully':'Download Failed',ok?'ok':'err');
+  },500);
+}
+</script>
+</body>
+</html>
